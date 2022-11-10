@@ -16,6 +16,9 @@
 # Для этого размеры предварительно нужно округлить в большую сторону до ближайшего 0 или 5 и затем сгруппировать по одинаковым размерам,
 # подсчитав количество ноутбуков в каждой группе. Отсортируйте данные по размерам.
 
+# Сделал 2 разных запроса т.к. не понял как считать размер.
+
+# 1 запрос
 ("SELECT ROUND(diagonal), COUNT(diagonal) FROM notebooks_notebook\n"
  "GROUP BY round\n"
  "ORDER BY round")
@@ -23,3 +26,14 @@
 # SELECT ROUND(diagonal), COUNT(diagonal) FROM notebooks_notebook
 # GROUP BY round
 # ORDER BY round
+
+# 2 запрос
+("SELECT ROUND(width) as width, ROUND(height) as height, ROUND(depth) as depth, COUNT(*)"
+ "FROM notebooks_notebook"
+ "GROUP BY width, height, depth"
+ "ORDER BY count")
+
+# SELECT ROUND(width) as width, ROUND(height) as height, ROUND(depth) as depth, COUNT(*)
+# FROM notebooks_notebook
+# GROUP BY width, height, depth
+# ORDER BY count

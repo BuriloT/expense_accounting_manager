@@ -21,13 +21,18 @@ services:
     networks:
         - djnet
   app:
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
     build: .
     depends_on:
       - rabbitmq
+    ports:
+      - "8000:8000"
     env_file:
       - .env
     networks:
         - djnet
+
 networks:
   djnet:
     driver: bridge
