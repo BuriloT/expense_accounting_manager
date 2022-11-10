@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -9,7 +11,8 @@ class Category(models.Model):
     )
     description = models.CharField(
         'описание',
-        max_length=256
+        max_length=256,
+        blank=True
     )
 
     class Meta:
@@ -27,7 +30,8 @@ class Organization(models.Model):
     )
     description = models.CharField(
         'описание',
-        max_length=256
+        max_length=256,
+        blank=True
     )
 
     class Meta:
@@ -42,24 +46,33 @@ class Transaction(models.Model):
     amount = models.FloatField(
         'сумма',
     )
-    time = models.DateField(
-        'Время'
+    time = models.DateTimeField(
+        'Время',
+        default=datetime.now().strftime(("%Y-%m-%d %H:%M:%S.%f")),
+        blank=True
     )
-    categories = models.ForeignKey(
+    category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         related_name='transaction',
         verbose_name='категории'
     )
-    organizations = models.ForeignKey(
+    organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
         related_name='transaction',
         verbose_name='организации'
     )
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        related_name='transaction',
+        verbose_name='пользователи'
+    )
     description = models.CharField(
         'описание',
-        max_length=256
+        max_length=256,
+        blank=True
     )
 
     class Meta:
